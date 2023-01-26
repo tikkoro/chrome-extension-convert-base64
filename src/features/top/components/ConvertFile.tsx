@@ -13,8 +13,7 @@ import { useDropzone } from 'react-dropzone';
 import fileToBase64 from '../util/fileToBase64';
 
 const acceptFile = {
-    'image/png': ['.png'],
-    'image/jpeg': ['.jpg', '.jpeg'],
+    'image/*': [],
 };
 
 const ConvertFile = (): JSX.Element => {
