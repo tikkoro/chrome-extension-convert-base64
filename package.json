@@ -1,0 +1,58 @@
+{
+    "name": "chrome-extension-convert-base64",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "preinstall": "npx only-allow pnpm && typesync || :",
+        "dev": "next dev",
+        "build": "next build",
+        "export": "next export",
+        "start": "next start",
+        "lint": "next lint",
+        "lint:fix": "yarn lint --fix",
+        "format": "prettier --write --ignore-path .gitignore './**/*.{js,jsx,ts,tsx,json}'",
+        "prepare": "npx simple-git-hooks || :"
+    },
+    "dependencies": {
+        "@chakra-ui/react": "^2.4.9",
+        "@emotion/react": "^11.10.5",
+        "@emotion/styled": "^11.10.5",
+        "@next/font": "13.1.4",
+        "framer-motion": "^8.5.0",
+        "next": "13.1.4",
+        "react": "18.2.0",
+        "react-dom": "18.2.0"
+    },
+    "devDependencies": {
+        "@types/eslint": "^8.4.10",
+        "@types/node": "^18.11.18",
+        "@types/prettier": "^2.7.2",
+        "@types/react": "^18.0.27",
+        "@types/react-dom": "^18.0.10",
+        "@typescript-eslint/eslint-plugin": "^5.48.2",
+        "@typescript-eslint/parser": "^5.48.2",
+        "eslint": "^8.32.0",
+        "eslint-config-next": "^13.1.4",
+        "eslint-config-prettier": "^8.6.0",
+        "eslint-plugin-import": "^2.27.5",
+        "eslint-plugin-react-hooks": "^4.6.0",
+        "eslint-plugin-simple-import-sort": "^9.0.0",
+        "eslint-plugin-unused-imports": "^2.0.0",
+        "lint-staged": "^13.1.0",
+        "prettier": "^2.8.3",
+        "simple-git-hooks": "^2.8.1",
+        "typescript": "^4.9.4"
+    },
+    "lint-staged": {
+        "src/**/*.{js,jsx,ts,tsx}": [
+            "prettier --write --loglevel=warn",
+            "eslint --fix --quiet"
+        ],
+        "src/**/*.{html,json,gql,graphql}": [
+            "prettier --write --loglevel=error"
+        ]
+    },
+    "simple-git-hooks": {
+        "pre-commit": "npx lint-staged"
+    }
+}
