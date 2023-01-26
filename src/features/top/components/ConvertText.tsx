@@ -7,16 +7,20 @@ import {
     Editable,
     EditablePreview,
     EditableTextarea,
+    useClipboard,
 } from '@chakra-ui/react';
 import textToBase64 from '../util/textToBase64';
 
 const ConvertText = (): JSX.Element => {
-    const [value, setValue] = useState('');
+    const { onCopy, setValue, hasCopied } = useClipboard('');
+
+    const [text, setText] = useState('');
     const [convertedText, setConvertedText] = useState<string>();
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-        setValue(event.target.value);
+        setText(event.target.value);
     };
     const onCovertText = (text: string) => {
+        setValue(textToBase64(text));
         setConvertedText(textToBase64(text));
     };
 
@@ -24,14 +28,14 @@ const ConvertText = (): JSX.Element => {
         <VStack>
             <Input
                 onChange={handleChange}
-                value={value}
+                value={text}
                 w='400px'
                 placeholder='input here'
             />
             <Button
                 colorScheme='teal'
                 onClick={() => {
-                    onCovertText(value);
+                    onCovertText(text);
                 }}
             >
                 encode
@@ -51,6 +55,17 @@ const ConvertText = (): JSX.Element => {
                 </Center>
                 <EditableTextarea h='200px' />
             </Editable>
+            <Button
+                position='relative'
+                right='-210px'
+                bottom='50px'
+                size='sm'
+                colorScheme='red'
+                onClick={onCopy}
+                opacity='0.9'
+            >
+                {hasCopied ? 'copied' : 'copy'}
+            </Button>
         </VStack>
     );
 };

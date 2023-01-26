@@ -8,6 +8,7 @@ import {
     EditablePreview,
     EditableTextarea,
     HStack,
+    useClipboard,
 } from '@chakra-ui/react';
 import { useDropzone } from 'react-dropzone';
 import fileToBase64 from '../util/fileToBase64';
@@ -17,12 +18,16 @@ const acceptFile = {
 };
 
 const ConvertFile = (): JSX.Element => {
+    const { onCopy, setValue, hasCopied } = useClipboard('');
+
     const [file, setFile] = useState<File>();
     const [fileUrl, setFileUrl] = useState<string>('');
     const [convertedFile, setConvertedFile] = useState<string>();
     const onCovertFile = async () => {
         if (file) {
-            setConvertedFile(await fileToBase64(file));
+            const tmpText = await fileToBase64(file);
+            setConvertedFile(tmpText);
+            setValue(tmpText);
         }
     };
 
@@ -76,6 +81,17 @@ const ConvertFile = (): JSX.Element => {
                 </Center>
                 <EditableTextarea h='200px' />
             </Editable>
+            <Button
+                position='relative'
+                right='-210px'
+                bottom='50px'
+                size='sm'
+                colorScheme='red'
+                onClick={onCopy}
+                opacity='0.9'
+            >
+                {hasCopied ? 'copied' : 'copy'}
+            </Button>
         </VStack>
     );
 };
